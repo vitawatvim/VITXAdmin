@@ -6,7 +6,7 @@
 
 - GitHub Pages: `https://vitawatvim.github.io/VITXAdmin/`
 - Public static repository: `https://github.com/vitawatvim/VITXAdmin`
-- OpenAI Sites สำรอง: `https://playpark-admin-control.vitawat2545.chatgpt.site/`
+- OpenAI Sites สำรอง: `https://vitx-admin-control.vitawat2545.chatgpt.site/`
 
 GitHub Pages ไม่ใช้ session ของ ChatGPT หน้าเว็บยังบังคับล็อกอิน Supabase Auth
 และทุก Admin RPC ตรวจ `admin_users` ก่อนทำงาน repository `VITXLauncher`
@@ -105,15 +105,17 @@ Publishable key อยู่ใน browser ได้ตามการออก�
 หากโปรแกรมดับโดยไม่ได้ logout ผู้ใช้จะเข้าสู่ระบบใหม่ได้หลัง lease หมดอายุ
 ค่า lease ปรับได้จากหน้า Admin ระหว่าง 60–900 วินาที
 
-## การแจกอัปเดตแบบจำกัดผู้ใช้
+## การแจกโปรแกรมและการควบคุมสิทธิ์
 
-GitHub Release สาธารณะไม่เหมาะกับไฟล์ที่ต้องจำกัดผู้ใช้ ให้เก็บ ZIP ใน
-Supabase Storage bucket แบบ private แล้วใช้ Edge Function ตรวจ `app_sessions`
-ก่อนสร้าง signed URL อายุสั้น หน้า Admin ในชุดนี้เก็บ version, SHA-256,
-release notes และ private storage path ไว้พร้อมแล้ว
+Installer และแพ็กเกจอัปเดตเผยแพร่สาธารณะที่ `vitawatvim/VITXUpdates` เพื่อให้
+ติดตั้งและอัปเดตได้ง่าย ตัวโปรแกรมยังบังคับล็อกอินผ่าน Supabase ก่อนเข้าใช้งาน
+กิจกรรม บัญชีใหม่ไม่มีสิทธิ์จนกว่าผู้ดูแลจะอนุมัติ กำหนดวันหมดอายุ และเลือก
+กิจกรรมให้เป็นรายบัญชี
 
-อย่าเปิด GitHub Release เดิมเป็น Public จนกว่าจุดดาวน์โหลดจะตรวจ session token
-ของผู้ใช้ก่อนส่งไฟล์
+หากภายหลังต้องการจำกัดการดาวน์โหลดไฟล์ด้วย ให้ย้าย ZIP ไป Supabase Storage
+bucket แบบ private และใช้ Edge Function ตรวจ `app_sessions` ก่อนออก signed URL
+อายุสั้น ระบบหน้า Admin รองรับการเก็บ version, SHA-256, release notes และ
+private storage path ไว้แล้ว
 
 ## โครงสร้าง
 
