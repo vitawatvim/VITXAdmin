@@ -8,11 +8,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=4">
+  <link rel="stylesheet" href="./styles.css?v=5">
   <script src="./config.js"></script>
 </head>
 <body>
   <div id="toast" class="toast" role="status"></div>
+  <div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite">
+    <div class="loading-card"><span class="spinner large"></span><b id="loadingText">กำลังเตรียมระบบ…</b><small>กรุณารอสักครู่</small></div>
+  </div>
 
   <main id="setupView" class="center-card hidden">
     <div class="brand-mark">VX</div>
@@ -42,7 +45,7 @@
         <h2>เข้าสู่ระบบผู้ดูแล</h2>
         <label>อีเมล<input id="email" type="email" autocomplete="username" required placeholder="admin@example.com"></label>
         <label>รหัสผ่าน<input id="password" type="password" autocomplete="current-password" required minlength="8" placeholder="••••••••"></label>
-        <button class="btn primary wide" type="submit"><span>เข้าสู่ระบบ</span><span>→</span></button>
+        <button id="loginSubmit" class="btn primary wide" type="submit"><span>เข้าสู่ระบบ</span><span>→</span></button>
         <p id="loginError" class="form-error"></p>
       </form>
     </section>
@@ -116,7 +119,7 @@
             <label class="switch-row"><div><b>บังคับอัปเดต</b><small>ไม่ให้ใช้เวอร์ชันเก่าต่อ</small></div><input name="update_required" type="checkbox"><span class="switch"></span></label>
             <label>ข้อความอัปเดต<textarea name="update_message" rows="3"></textarea></label>
           </article>
-          <div class="form-actions full"><button class="btn primary" type="submit">บันทึกการตั้งค่า</button></div>
+          <div class="form-actions full"><button id="systemSubmit" class="btn primary" type="submit">บันทึกการตั้งค่า</button></div>
         </form>
       </section>
 
@@ -152,7 +155,7 @@
     <div class="dialog-head"><div><p class="eyebrow">ACTIVITY CONFIG</p><h2>ตั้งค่ากิจกรรม</h2></div><button type="button" class="close-btn" data-close>×</button></div>
     <label>Key<input name="activity_key" required pattern="[a-z0-9_-]{2,50}" placeholder="new_event"></label>
     <label>ชื่อกิจกรรม<input name="name" required></label>
-    <label>คำอธิบาย<textarea name="description" rows="2"></textarea></label>
+    <label>ข้อความบนการ์ดกิจกรรม<textarea name="description" rows="2"></textarea><small>ใช้แจ้งรายละเอียดหรือสิ่งที่เปลี่ยนแปลงของกิจกรรมให้ผู้ใช้เห็นใน Launcher</small></label>
     <div class="field-row"><label>ลำดับ<input name="sort_order" type="number" value="0"></label><span></span></div>
     <label class="switch-row"><div><b>เปิดใช้งาน</b></div><input name="enabled" type="checkbox"><span class="switch"></span></label>
     <label class="switch-row"><div><b>แสดงในแอพ</b></div><input name="visible" type="checkbox" checked><span class="switch"></span></label>
@@ -162,13 +165,12 @@
   <dialog id="releaseDialog"><form id="releaseForm" class="dialog-form">
     <div class="dialog-head"><div><p class="eyebrow">NEW RELEASE</p><h2>เพิ่มเวอร์ชัน</h2></div><button type="button" class="close-btn" data-close>×</button></div>
     <div class="field-row"><label>เวอร์ชัน<input name="version" required placeholder="1.1.0"></label><label>ชื่อ Release<input name="title" required></label></div>
-    <label>Release notes<textarea name="release_notes" rows="4"></textarea></label>
     <label>Private download path<input name="download_path" placeholder="updates/1.1.0/update.zip"></label>
     <label>SHA-256<input name="sha256" pattern="[a-fA-F0-9]{64}" placeholder="เว้นว่างได้"></label>
     <div class="field-row"><label class="switch-row"><div><b>เปิดใช้งาน</b></div><input name="enabled" type="checkbox" checked><span class="switch"></span></label><label class="switch-row"><div><b>บังคับอัปเดต</b></div><input name="required" type="checkbox"><span class="switch"></span></label></div>
     <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary">บันทึก</button></div>
   </form></dialog>
 
-  <script type="module" src="./app.js?v=4"></script>
+  <script type="module" src="./app.js?v=5"></script>
 </body>
 </html>

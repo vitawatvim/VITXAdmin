@@ -62,6 +62,8 @@ root ของ `VITXAdmin` และ push เข้า `main` GitHub Pages จ�
 - กำหนดสิทธิ์กิจกรรมแยกเป็นรายผู้ใช้
 - ปิดระบบและเปิด maintenance mode
 - กำหนดเวอร์ชันล่าสุด เวอร์ชันขั้นต่ำ และบังคับอัปเดต
+- ปุ่มเข้าสู่ระบบ รีเฟรช และบันทึก แสดงสถานะกำลังทำงานและล็อกปุ่มจนคำขอเสร็จ
+- คำอธิบายกิจกรรมเป็นข้อความที่แสดงบนการ์ดใน Launcher จึงใช้แจ้งข่าวกิจกรรมได้
 - Usage log, login attempts และ admin audit log
 - เก็บรหัสผ่านด้วย bcrypt (`pgcrypto`) และเก็บเฉพาะ SHA-256 digest ของ session token
 - RLS ปิดการอ่านตารางโดยตรง ทุกคำสั่งผ่าน RPC ที่ตรวจสิทธิ์
@@ -114,8 +116,8 @@ Installer และแพ็กเกจอัปเดตเผยแพร่�
 
 หากภายหลังต้องการจำกัดการดาวน์โหลดไฟล์ด้วย ให้ย้าย ZIP ไป Supabase Storage
 bucket แบบ private และใช้ Edge Function ตรวจ `app_sessions` ก่อนออก signed URL
-อายุสั้น ระบบหน้า Admin รองรับการเก็บ version, SHA-256, release notes และ
-private storage path ไว้แล้ว
+อายุสั้น ระบบหน้า Admin รองรับการเก็บ version, SHA-256 และ private storage
+path ไว้แล้ว รายละเอียดภายในไม่แสดงในหน้าเว็บสาธารณะหรือหน้าต่างอัปเดต
 
 ## โครงสร้าง
 
