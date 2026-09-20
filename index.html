@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07101f">
+  <title>PlayPark Admin Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=4">
+  <script src="./config.js"></script>
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+
+  <main id="setupView" class="center-card hidden">
+    <div class="brand-mark">PP</div>
+    <p class="eyebrow">SETUP REQUIRED</p>
+    <h1>เชื่อมต่อ Supabase ก่อนใช้งาน</h1>
+    <p>ใส่ Project URL และ Publishable key ใน <code>dist/config.js</code> แล้วโหลดหน้านี้ใหม่</p>
+    <ol>
+      <li>รันไฟล์ SQL ใน Supabase SQL Editor</li>
+      <li>สร้าง Admin ใน Authentication → Users</li>
+      <li>เพิ่ม UUID ของ Admin ลงตาราง <code>admin_users</code></li>
+    </ol>
+  </main>
+
+  <main id="loginView" class="login-shell hidden">
+    <section class="login-art">
+      <div class="brand"><span class="brand-mark">PP</span><span>PLAYPARK CONTROL</span></div>
+      <div>
+        <p class="eyebrow">PRIVATE OPERATIONS</p>
+        <h1>จัดการผู้ใช้<br><span>ได้จากที่เดียว</span></h1>
+        <p class="lead">ดูสถานะออนไลน์ วันหมดอายุ กิจกรรม และการอัปเดตของโปรแกรมแบบเรียลไทม์</p>
+      </div>
+      <div class="security-note"><span class="pulse"></span> Admin access protected by Supabase Auth</div>
+    </section>
+    <section class="login-panel">
+      <form id="loginForm" class="login-form">
+        <p class="eyebrow">ADMIN SIGN IN</p>
+        <h2>เข้าสู่ระบบผู้ดูแล</h2>
+        <label>อีเมล<input id="email" type="email" autocomplete="username" required placeholder="admin@example.com"></label>
+        <label>รหัสผ่าน<input id="password" type="password" autocomplete="current-password" required minlength="8" placeholder="••••••••"></label>
+        <button class="btn primary wide" type="submit"><span>เข้าสู่ระบบ</span><span>→</span></button>
+        <p id="loginError" class="form-error"></p>
+      </form>
+    </section>
+  </main>
+
+  <div id="appView" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark small">PP</span><span>CONTROL</span></div>
+      <nav id="nav">
+        <button class="nav-item active" data-page="dashboard"><span>◫</span>ภาพรวม</button>
+        <button class="nav-item" data-page="users"><span>♙</span>ผู้ใช้งาน</button>
+        <button class="nav-item" data-page="activities"><span>◇</span>กิจกรรม</button>
+        <button class="nav-item" data-page="system"><span>⚙</span>ตั้งค่าระบบ</button>
+        <button class="nav-item" data-page="updates"><span>↻</span>อัปเดต</button>
+        <button class="nav-item" data-page="logs"><span>≡</span>ประวัติ</button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="admin-chip"><span class="avatar">A</span><div><b id="adminName">Administrator</b><small>ผู้ดูแลระบบ</small></div></div>
+        <button id="logoutBtn" class="icon-btn" title="ออกจากระบบ">⇥</button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div><p class="eyebrow">PLAYPARK DESKTOP BOT</p><h1 id="pageTitle">ภาพรวมระบบ</h1></div>
+        <div class="top-actions"><span id="systemBadge" class="badge success">● ระบบพร้อมใช้งาน</span><button id="refreshBtn" class="icon-btn" title="รีเฟรช">↻</button></div>
+      </header>
+
+      <section id="page-dashboard" class="page active">
+        <div id="stats" class="stats-grid"></div>
+        <div class="grid two">
+          <article class="card">
+            <div class="card-head"><div><p class="eyebrow">LIVE STATUS</p><h2>ผู้ใช้ล่าสุด</h2></div><button class="link-btn" data-goto="users">ดูทั้งหมด →</button></div>
+            <div id="recentUsers" class="compact-list empty">กำลังโหลดข้อมูล…</div>
+          </article>
+          <article class="card">
+            <div class="card-head"><div><p class="eyebrow">CONTROL CENTER</p><h2>สถานะกิจกรรม</h2></div><button class="link-btn" data-goto="activities">จัดการ →</button></div>
+            <div id="activitySummary" class="compact-list empty">กำลังโหลดข้อมูล…</div>
+          </article>
+        </div>
+      </section>
+
+      <section id="page-users" class="page">
+        <div class="toolbar">
+          <label class="search">⌕<input id="userSearch" placeholder="ค้นหา username หรือชื่อผู้ใช้"></label>
+          <button id="addUserBtn" class="btn primary">＋ สร้างผู้ใช้</button>
+        </div>
+        <article class="card table-card">
+          <div class="table-wrap"><table><thead><tr><th>ผู้ใช้</th><th>สถานะ</th><th>เริ่มใช้งาน</th><th>หมดอายุ</th><th>เข้าใช้ล่าสุด</th><th></th></tr></thead><tbody id="usersTable"></tbody></table></div>
+        </article>
+      </section>
+
+      <section id="page-activities" class="page">
+        <div class="section-intro"><div><p class="eyebrow">ACTIVITY ACCESS</p><h2>เปิดหรือปิดกิจกรรม</h2><p>การตั้งค่านี้มีผลกับผู้ใช้ทุกคน สามารถเพิ่มกิจกรรมใหม่ไว้ล่วงหน้าแล้วซ่อนไว้ก่อนได้</p></div><button id="addActivityBtn" class="btn primary">＋ เพิ่มกิจกรรม</button></div>
+        <div id="activitiesGrid" class="activity-grid"></div>
+      </section>
+
+      <section id="page-system" class="page">
+        <form id="systemForm" class="grid two settings-grid">
+          <article class="card">
+            <p class="eyebrow">AVAILABILITY</p><h2>สถานะระบบ</h2>
+            <label class="switch-row"><div><b>เปิดระบบ</b><small>อนุญาตให้ผู้ใช้ล็อกอิน</small></div><input name="system_enabled" type="checkbox"><span class="switch"></span></label>
+            <label class="switch-row"><div><b>โหมดบำรุงรักษา</b><small>หยุดการล็อกอินชั่วคราว</small></div><input name="maintenance_mode" type="checkbox"><span class="switch"></span></label>
+            <label>ข้อความแจ้งเตือน<textarea name="maintenance_message" rows="3"></textarea></label>
+            <label>อายุ session (วินาที)<input name="session_lease_seconds" type="number" min="60" max="900"></label>
+          </article>
+          <article class="card">
+            <p class="eyebrow">VERSION POLICY</p><h2>นโยบายเวอร์ชัน</h2>
+            <div class="field-row"><label>เวอร์ชันขั้นต่ำ<input name="minimum_version" placeholder="1.0.0"></label><label>เวอร์ชันล่าสุด<input name="latest_version" placeholder="1.0.0"></label></div>
+            <label class="switch-row"><div><b>แจ้งว่ามีอัปเดต</b><small>แสดงข้อความในแอพ</small></div><input name="update_available" type="checkbox"><span class="switch"></span></label>
+            <label class="switch-row"><div><b>บังคับอัปเดต</b><small>ไม่ให้ใช้เวอร์ชันเก่าต่อ</small></div><input name="update_required" type="checkbox"><span class="switch"></span></label>
+            <label>ข้อความอัปเดต<textarea name="update_message" rows="3"></textarea></label>
+          </article>
+          <div class="form-actions full"><button class="btn primary" type="submit">บันทึกการตั้งค่า</button></div>
+        </form>
+      </section>
+
+      <section id="page-updates" class="page">
+        <div class="section-intro"><div><p class="eyebrow">RELEASE CHANNEL</p><h2>แจ้งเตือนเวอร์ชันใหม่</h2><p>บันทึก metadata ของไฟล์อัปเดต โดยไม่เปิด GitHub Release เป็นสาธารณะ</p></div><button id="addReleaseBtn" class="btn primary">＋ เพิ่ม Release</button></div>
+        <div id="releasesList" class="release-list"></div>
+      </section>
+
+      <section id="page-logs" class="page">
+        <div class="tabs"><button class="tab active" data-log="usage">การใช้งาน</button><button class="tab" data-log="audit">ผู้ดูแล</button></div>
+        <article class="card table-card"><div class="table-wrap"><table><thead id="logsHead"></thead><tbody id="logsTable"></tbody></table></div></article>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="userDialog">
+    <form id="userForm" class="dialog-form">
+      <div class="dialog-head"><div><p class="eyebrow">USER ACCESS</p><h2 id="userDialogTitle">สร้างผู้ใช้</h2></div><button type="button" class="close-btn" data-close>×</button></div>
+      <input name="id" type="hidden">
+      <div class="field-row"><label>Username<input name="username" required pattern="[A-Za-z0-9_.-]{3,32}"></label><label>ชื่อที่แสดง<input name="display_name" required></label></div>
+      <label id="passwordField">รหัสผ่านเริ่มต้น<input name="password" type="password" minlength="10"><small>อย่างน้อย 10 ตัวอักษร</small></label>
+      <div class="field-row"><label>เริ่มใช้งาน<input name="starts_at" type="datetime-local" required></label><label>หมดอายุ<input name="expires_at" type="datetime-local" required></label></div>
+      <div id="userApprovalNote" class="approval-note hidden"><b>บัญชีนี้สมัครจากหน้าแอปและกำลังรออนุมัติ</b><span>ทุกกิจกรรมถูกปิดไว้ คุณต้องเลือกสิทธิ์ด้านล่างก่อนเปิดบัญชี</span></div>
+      <label class="switch-row edit-only"><div><b id="userEnabledTitle">เปิดใช้งานบัญชี</b><small id="userEnabledHelp"></small></div><input name="enabled" type="checkbox" checked><span class="switch"></span></label>
+      <label>หมายเหตุ<textarea name="notes" rows="3"></textarea></label>
+      <div id="userActivities" class="user-activities hidden"><p class="eyebrow">ACTIVITY PERMISSIONS</p><div id="userActivityList"></div></div>
+      <div class="dialog-actions edit-only"><button id="resetPasswordBtn" type="button" class="btn subtle">รีเซ็ตรหัสผ่าน</button><button id="revokeBtn" type="button" class="btn danger">ตัด session</button></div>
+      <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary" type="submit">บันทึก</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="activityDialog"><form id="activityForm" class="dialog-form">
+    <div class="dialog-head"><div><p class="eyebrow">ACTIVITY CONFIG</p><h2>ตั้งค่ากิจกรรม</h2></div><button type="button" class="close-btn" data-close>×</button></div>
+    <label>Key<input name="activity_key" required pattern="[a-z0-9_-]{2,50}" placeholder="new_event"></label>
+    <label>ชื่อกิจกรรม<input name="name" required></label>
+    <label>คำอธิบาย<textarea name="description" rows="2"></textarea></label>
+    <div class="field-row"><label>ลำดับ<input name="sort_order" type="number" value="0"></label><span></span></div>
+    <label class="switch-row"><div><b>เปิดใช้งาน</b></div><input name="enabled" type="checkbox"><span class="switch"></span></label>
+    <label class="switch-row"><div><b>แสดงในแอพ</b></div><input name="visible" type="checkbox" checked><span class="switch"></span></label>
+    <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary">บันทึก</button></div>
+  </form></dialog>
+
+  <dialog id="releaseDialog"><form id="releaseForm" class="dialog-form">
+    <div class="dialog-head"><div><p class="eyebrow">NEW RELEASE</p><h2>เพิ่มเวอร์ชัน</h2></div><button type="button" class="close-btn" data-close>×</button></div>
+    <div class="field-row"><label>เวอร์ชัน<input name="version" required placeholder="1.1.0"></label><label>ชื่อ Release<input name="title" required></label></div>
+    <label>Release notes<textarea name="release_notes" rows="4"></textarea></label>
+    <label>Private download path<input name="download_path" placeholder="updates/1.1.0/update.zip"></label>
+    <label>SHA-256<input name="sha256" pattern="[a-fA-F0-9]{64}" placeholder="เว้นว่างได้"></label>
+    <div class="field-row"><label class="switch-row"><div><b>เปิดใช้งาน</b></div><input name="enabled" type="checkbox" checked><span class="switch"></span></label><label class="switch-row"><div><b>บังคับอัปเดต</b></div><input name="required" type="checkbox"><span class="switch"></span></label></div>
+    <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary">บันทึก</button></div>
+  </form></dialog>
+
+  <script type="module" src="./app.js?v=4"></script>
+</body>
+</html>
