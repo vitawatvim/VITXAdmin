@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07101f">
-  <title>PlayPark Admin Control</title>
+  <title>VITX Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
   <div id="toast" class="toast" role="status"></div>
 
   <main id="setupView" class="center-card hidden">
-    <div class="brand-mark">PP</div>
+    <div class="brand-mark">VX</div>
     <p class="eyebrow">SETUP REQUIRED</p>
     <h1>เชื่อมต่อ Supabase ก่อนใช้งาน</h1>
     <p>ใส่ Project URL และ Publishable key ใน <code>dist/config.js</code> แล้วโหลดหน้านี้ใหม่</p>
@@ -28,13 +28,13 @@
 
   <main id="loginView" class="login-shell hidden">
     <section class="login-art">
-      <div class="brand"><span class="brand-mark">PP</span><span>PLAYPARK CONTROL</span></div>
+      <div class="brand"><span class="brand-mark">VX</span><span>VITX ADMIN</span></div>
       <div>
         <p class="eyebrow">PRIVATE OPERATIONS</p>
         <h1>จัดการผู้ใช้<br><span>ได้จากที่เดียว</span></h1>
         <p class="lead">ดูสถานะออนไลน์ วันหมดอายุ กิจกรรม และการอัปเดตของโปรแกรมแบบเรียลไทม์</p>
       </div>
-      <div class="security-note"><span class="pulse"></span> Admin access protected by Supabase Auth</div>
+      <div class="security-note"><span class="pulse"></span> Powered by VITX · Protected by Supabase Auth</div>
     </section>
     <section class="login-panel">
       <form id="loginForm" class="login-form">
@@ -50,7 +50,7 @@
 
   <div id="appView" class="app-shell hidden">
     <aside class="sidebar">
-      <div class="brand"><span class="brand-mark small">PP</span><span>CONTROL</span></div>
+      <div class="brand"><span class="brand-mark small">VX</span><span>VITX ADMIN</span></div>
       <nav id="nav">
         <button class="nav-item active" data-page="dashboard"><span>◫</span>ภาพรวม</button>
         <button class="nav-item" data-page="users"><span>♙</span>ผู้ใช้งาน</button>
@@ -60,14 +60,14 @@
         <button class="nav-item" data-page="logs"><span>≡</span>ประวัติ</button>
       </nav>
       <div class="sidebar-foot">
-        <div class="admin-chip"><span class="avatar">A</span><div><b id="adminName">Administrator</b><small>ผู้ดูแลระบบ</small></div></div>
+        <div class="admin-chip"><span class="avatar">A</span><div><b id="adminName">Administrator</b><small>Powered by VITX</small></div></div>
         <button id="logoutBtn" class="icon-btn" title="ออกจากระบบ">⇥</button>
       </div>
     </aside>
 
     <main class="content">
       <header class="topbar">
-        <div><p class="eyebrow">PLAYPARK DESKTOP BOT</p><h1 id="pageTitle">ภาพรวมระบบ</h1></div>
+        <div><p class="eyebrow">VITX LAUNCHER</p><h1 id="pageTitle">ภาพรวมระบบ</h1></div>
         <div class="top-actions"><span id="systemBadge" class="badge success">● ระบบพร้อมใช้งาน</span><button id="refreshBtn" class="icon-btn" title="รีเฟรช">↻</button></div>
       </header>
 

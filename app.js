@@ -1,5 +1,5 @@
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const cfg=window.PLAYPARK_CONFIG||{}; let supabase,demoMode=false,users=[],settings={system:{},activities:[],releases:[]},logs={usage:[],audit:[]},activeLog="usage";
+const cfg=window.VITX_CONFIG||{}; let supabase,demoMode=false,users=[],settings={system:{},activities:[],releases:[]},logs={usage:[],audit:[]},activeLog="usage";
 const date=v=>v?new Intl.DateTimeFormat("th-TH",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v)):"—";
 const localDate=v=>{const d=v?new Date(v):new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,16)};
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
@@ -21,9 +21,9 @@ function loadDemo(){
   {id:"2",username:"beam",display_name:"Beam",enabled:true,online:false,starts_at:new Date(Date.now()-25*86400000),expires_at:new Date(Date.now()+5*86400000),last_login_at:new Date(Date.now()-2*3600000)},
   {id:"3",username:"night",display_name:"Night",enabled:false,approval_status:"pending",online:false,starts_at:new Date(),expires_at:new Date(Date.now()+30*86400000),last_login_at:null}
  ];
- settings={system:{system_enabled:true,maintenance_mode:false,maintenance_message:"",session_lease_seconds:120,minimum_version:"1.2.0",latest_version:"1.3.0",update_available:true,update_required:false,update_message:"มีเวอร์ชันใหม่"},
+ settings={system:{system_enabled:true,maintenance_mode:false,maintenance_message:"",session_lease_seconds:120,minimum_version:"1.4.0",latest_version:"1.4.0",update_available:false,update_required:false,update_message:""},
   activities:[{activity_key:"daily_login",name:"Daily Login",description:"รับรางวัลรายวัน เก็บโค้ด และใช้โค้ดอัตโนมัติ",enabled:true,visible:true,sort_order:10},{activity_key:"special_event",name:"กิจกรรมพิเศษ",description:"เตรียมเปิดใช้งานในอนาคต",enabled:false,visible:true,sort_order:20},{activity_key:"seasonal_event",name:"กิจกรรมตามเทศกาล",description:"กำหนดจากหน้า Admin",enabled:false,visible:false,sort_order:30}],
-  releases:[{version:"1.3.0",title:"Activity access update",release_notes:"เพิ่มระบบสมาชิกและการตั้งค่ากิจกรรม",enabled:true,required:false,published_at:new Date()}]};
+  releases:[{version:"1.4.0",title:"VITX Launcher",release_notes:"รีแบรนด์โปรแกรมและช่องทางดาวน์โหลดเป็น VITX",enabled:true,required:false,published_at:new Date()}]};
  logs={usage:[{created_at:new Date(),display_name:"Mint S.",event_type:"login",activity_key:null,success:true}],audit:[]};
  renderStats({total_users:3,pending_users:1,online_users:1,expiring_7_days:1,expired_users:0});renderUsers();renderActivities();renderSystem();renderReleases();renderLogs()
 }
