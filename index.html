@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=7">
+  <link rel="stylesheet" href="./styles.css?v=8">
   <script src="./config.js"></script>
 </head>
 <body>
@@ -156,7 +156,7 @@
     <label>Key<input name="activity_key" required pattern="[a-z0-9_-]{2,50}" placeholder="new_event"></label>
     <label>ชื่อกิจกรรม<input name="name" required></label>
     <label>ข้อความบนการ์ดกิจกรรม<textarea name="description" rows="2"></textarea><small>ใช้แจ้งรายละเอียดหรือสิ่งที่เปลี่ยนแปลงของกิจกรรมให้ผู้ใช้เห็นใน Launcher</small></label>
-    <div class="field-row"><label>ลำดับ<input name="sort_order" type="number" value="0"></label><span></span></div>
+    <label>ตำแหน่งบนหน้าแอพ<select name="position"></select><small>เลือกตำแหน่งที่ต้องการ ระบบจะจัดเลขลำดับภายในให้อัตโนมัติ</small></label>
     <label class="switch-row"><div><b>เปิดใช้งาน</b></div><input name="enabled" type="checkbox"><span class="switch"></span></label>
     <label class="switch-row"><div><b>แสดงในแอพ</b></div><input name="visible" type="checkbox" checked><span class="switch"></span></label>
     <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary">บันทึก</button></div>
@@ -178,6 +178,6 @@
     <div class="dialog-actions"><button id="copyRecoveryBtn" type="button" class="btn subtle">คัดลอก</button><button type="button" class="btn primary" data-close>ปิด</button></div>
   </div></dialog>
 
-  <script type="module" src="./app.js?v=7"></script>
+  <script type="module" src="./app.js?v=8"></script>
 </body>
 </html>
