@@ -61,6 +61,11 @@ root ของ `VITXAdmin` และ push เข้า `main` GitHub Pages จ�
 - ห้ามล็อกอินพร้อมกันมากกว่าหนึ่งเครื่องด้วย session lease และ heartbeat ขณะเปิดแอพ Session จะต่ออายุอัตโนมัติโดยไม่มีเวลาหมดอายุคงที่ ค่า lease ใช้ปลด Session ที่ค้างหลังแอพปิดหรือขาดการเชื่อมต่อเท่านั้น (ค่าเริ่มต้น 300 วินาที)
 - Session ที่ค้างจากโปรแกรมปิดผิดปกติหมดอายุอัตโนมัติ (ค่าเริ่มต้น 300 วินาที)
 - จำนวนผู้ใช้ทั้งหมด ออนไลน์ ใกล้หมดอายุ และหมดอายุแล้ว
+- Device Management แสดงชื่อเครื่อง ประเภทอุปกรณ์ รุ่น Windows สถาปัตยกรรม
+  App version เวลาเข้าใช้/พบล่าสุด และ IP แบบปกปิดบางส่วน
+- `Force Logout` ตัด Session ได้ทั้งรายเครื่องหรือทุกเครื่อง ส่วน `Reset Device`
+  จะตัด Session และพักประวัติอุปกรณ์รายการนั้น ผู้ใช้ยังล็อกอินจากเครื่องเดิม
+  เครื่องใหม่ หรือหลังลง Windows ใหม่ได้ตามปกติ ระบบไม่ใช้ Device allowlist
 - เปิด/ปิด/ซ่อนกิจกรรมจากส่วนกลาง
 - กิจกรรม Key ใหม่ปรากฏใน Launcher อัตโนมัติตามตำแหน่งที่เลือก แม้ยังไม่มีระบบทำงานจริง โดยจะแสดงสถานะ “เร็ว ๆ นี้”
 - เลือกลำดับกิจกรรมเป็นตำแหน่งที่ 1, 2, 3… หน้า Admin จะจัดค่าเรียงภายในให้อัตโนมัติ
@@ -133,4 +138,6 @@ path ไว้แล้ว รายละเอียดภายในไม�
 - `supabase/migrations/004_registered_user_default_access.sql` ปิดสิทธิ์กิจกรรมใหม่ให้ผู้สมัครโดยอัตโนมัติ
 - `supabase/migrations/005_password_recovery.sql` Recovery Code แบบ hash, rate limit, self-service password reset และการหมุน Code
 - `supabase/migrations/006_session_lease_clarity.sql` ตั้งเวลาปลด Session ค้างเป็น 300 วินาทีและช่วงที่ Admin ตั้งค่าได้ 120–3,600 วินาที
+- `supabase/migrations/007_device_management.sql` ทะเบียนอุปกรณ์แบบไม่ผูกเครื่อง,
+  Device RPC, Force Logout และ Reset Device พร้อม Admin audit
 - `.openai/hosting.json` การตั้งค่า OpenAI Sites

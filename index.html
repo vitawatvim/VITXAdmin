@@ -94,7 +94,7 @@
           <button id="addUserBtn" class="btn primary">＋ สร้างผู้ใช้</button>
         </div>
         <article class="card table-card">
-          <div class="table-wrap"><table><thead><tr><th>ผู้ใช้</th><th>สถานะ</th><th>เริ่มใช้งาน</th><th>หมดอายุ</th><th>เข้าใช้ล่าสุด</th><th></th></tr></thead><tbody id="usersTable"></tbody></table></div>
+          <div class="table-wrap"><table><thead><tr><th>ผู้ใช้</th><th>สถานะ</th><th>อุปกรณ์ปัจจุบัน</th><th>App</th><th>หมดอายุ</th><th>เข้าใช้ล่าสุด</th><th></th></tr></thead><tbody id="usersTable"></tbody></table></div>
         </article>
       </section>
 
@@ -145,6 +145,11 @@
       <div id="userApprovalNote" class="approval-note hidden"><b>บัญชีนี้สมัครจากหน้าแอปและกำลังรออนุมัติ</b><span>ทุกกิจกรรมถูกปิดไว้ คุณต้องเลือกสิทธิ์ด้านล่างก่อนเปิดบัญชี</span></div>
       <label class="switch-row edit-only"><div><b id="userEnabledTitle">เปิดใช้งานบัญชี</b><small id="userEnabledHelp"></small></div><input name="enabled" type="checkbox" checked><span class="switch"></span></label>
       <label>หมายเหตุ<textarea name="notes" rows="3"></textarea></label>
+      <div id="userDevices" class="device-panel edit-only">
+        <div class="device-panel-head"><div><p class="eyebrow">DEVICE MANAGEMENT</p><b>อุปกรณ์ที่เคยเข้าใช้งาน</b></div><button id="forceLogoutAllBtn" type="button" class="btn danger">Force Logout ทุกเครื่อง</button></div>
+        <p class="device-help">ข้อมูลนี้ใช้ตรวจสอบและช่วยแก้ปัญหาเท่านั้น บัญชีไม่ได้ถูกล็อกให้ใช้เครื่องเดิม ผู้ใช้สามารถเปลี่ยนเครื่องหรือลง Windows ใหม่ได้</p>
+        <div id="userDeviceList" class="device-list"><div class="empty">กำลังโหลด…</div></div>
+      </div>
       <div id="userActivities" class="user-activities hidden"><p class="eyebrow">ACTIVITY PERMISSIONS</p><div id="userActivityList"></div></div>
       <div class="dialog-actions edit-only"><button id="rotateRecoveryBtn" type="button" class="btn subtle">ออก Recovery Code ใหม่</button><button id="resetPasswordBtn" type="button" class="btn subtle">รีเซ็ตรหัสผ่าน</button><button id="revokeBtn" type="button" class="btn danger">ตัด session</button></div>
       <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary" type="submit">บันทึก</button></div>
@@ -178,6 +183,6 @@
     <div class="dialog-actions"><button id="copyRecoveryBtn" type="button" class="btn subtle">คัดลอก</button><button type="button" class="btn primary" data-close>ปิด</button></div>
   </div></dialog>
 
-  <script type="module" src="./app.js?v=9"></script>
+  <script type="module" src="./app.js?v=10"></script>
 </body>
 </html>
