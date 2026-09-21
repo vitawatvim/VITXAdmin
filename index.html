@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=5">
+  <link rel="stylesheet" href="./styles.css?v=7">
   <script src="./config.js"></script>
 </head>
 <body>
@@ -110,7 +110,7 @@
             <label class="switch-row"><div><b>เปิดระบบ</b><small>อนุญาตให้ผู้ใช้ล็อกอิน</small></div><input name="system_enabled" type="checkbox"><span class="switch"></span></label>
             <label class="switch-row"><div><b>โหมดบำรุงรักษา</b><small>หยุดการล็อกอินชั่วคราว</small></div><input name="maintenance_mode" type="checkbox"><span class="switch"></span></label>
             <label>ข้อความแจ้งเตือน<textarea name="maintenance_message" rows="3"></textarea></label>
-            <label>อายุ session (วินาที)<input name="session_lease_seconds" type="number" min="60" max="900"></label>
+            <label>เวลารอเมื่อแอพขาดการเชื่อมต่อ (วินาที)<input name="session_lease_seconds" type="number" min="120" max="3600"><small class="field-help">ไม่ใช่อายุการล็อกอิน ขณะเปิดแอพ Session จะต่ออายุอัตโนมัติและใช้งานต่อได้เรื่อย ๆ ค่านี้ใช้ปลด Session ที่ค้างหลังแอพปิดหรืออินเทอร์เน็ตหลุดเท่านั้น</small></label>
           </article>
           <article class="card">
             <p class="eyebrow">VERSION POLICY</p><h2>นโยบายเวอร์ชัน</h2>
@@ -146,7 +146,7 @@
       <label class="switch-row edit-only"><div><b id="userEnabledTitle">เปิดใช้งานบัญชี</b><small id="userEnabledHelp"></small></div><input name="enabled" type="checkbox" checked><span class="switch"></span></label>
       <label>หมายเหตุ<textarea name="notes" rows="3"></textarea></label>
       <div id="userActivities" class="user-activities hidden"><p class="eyebrow">ACTIVITY PERMISSIONS</p><div id="userActivityList"></div></div>
-      <div class="dialog-actions edit-only"><button id="resetPasswordBtn" type="button" class="btn subtle">รีเซ็ตรหัสผ่าน</button><button id="revokeBtn" type="button" class="btn danger">ตัด session</button></div>
+      <div class="dialog-actions edit-only"><button id="rotateRecoveryBtn" type="button" class="btn subtle">ออก Recovery Code ใหม่</button><button id="resetPasswordBtn" type="button" class="btn subtle">รีเซ็ตรหัสผ่าน</button><button id="revokeBtn" type="button" class="btn danger">ตัด session</button></div>
       <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary" type="submit">บันทึก</button></div>
     </form>
   </dialog>
@@ -171,6 +171,13 @@
     <div class="dialog-actions"><button type="button" class="btn subtle" data-close>ยกเลิก</button><button class="btn primary">บันทึก</button></div>
   </form></dialog>
 
-  <script type="module" src="./app.js?v=5"></script>
+  <dialog id="recoveryCodeDialog"><div class="dialog-form">
+    <div class="dialog-head"><div><p class="eyebrow">ONE-TIME CODE</p><h2>Recovery Code ใหม่</h2></div><button type="button" class="close-btn" data-close>×</button></div>
+    <p class="dialog-help">ส่งรหัสนี้ให้เจ้าของบัญชีผ่านช่องทางส่วนตัว ระบบจะแสดงรหัสนี้เพียงครั้งเดียว</p>
+    <input id="recoveryCodeValue" class="code-value" readonly>
+    <div class="dialog-actions"><button id="copyRecoveryBtn" type="button" class="btn subtle">คัดลอก</button><button type="button" class="btn primary" data-close>ปิด</button></div>
+  </div></dialog>
+
+  <script type="module" src="./app.js?v=7"></script>
 </body>
 </html>
