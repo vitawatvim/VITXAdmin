@@ -63,6 +63,9 @@ root ของ `VITXAdmin` และ push เข้า `main` GitHub Pages จ�
 - จำนวนผู้ใช้ทั้งหมด ออนไลน์ ใกล้หมดอายุ และหมดอายุแล้ว
 - Device Management แสดงชื่อเครื่อง ประเภทอุปกรณ์ รุ่น Windows สถาปัตยกรรม
   App version เวลาเข้าใช้/พบล่าสุด และ IP แบบปกปิดบางส่วน
+- เก็บประวัติการ Login แยกเป็นรายเหตุการณ์ พร้อมสรุปจำนวน Login และจำนวน
+  อุปกรณ์ทั้งหมด/ย้อนหลัง 30 วัน เพื่อช่วยตรวจการสลับใช้บัญชีระหว่างหลายเครื่อง
+  โดยข้อมูลนี้ใช้ตรวจสอบเท่านั้นและไม่บล็อกผู้ใช้
 - `Force Logout` ตัด Session ได้ทั้งรายเครื่องหรือทุกเครื่อง ส่วน `Reset Device`
   จะตัด Session และพักประวัติอุปกรณ์รายการนั้น ผู้ใช้ยังล็อกอินจากเครื่องเดิม
   เครื่องใหม่ หรือหลังลง Windows ใหม่ได้ตามปกติ ระบบไม่ใช้ Device allowlist
@@ -140,4 +143,6 @@ path ไว้แล้ว รายละเอียดภายในไม�
 - `supabase/migrations/006_session_lease_clarity.sql` ตั้งเวลาปลด Session ค้างเป็น 300 วินาทีและช่วงที่ Admin ตั้งค่าได้ 120–3,600 วินาที
 - `supabase/migrations/007_device_management.sql` ทะเบียนอุปกรณ์แบบไม่ผูกเครื่อง,
   Device RPC, Force Logout และ Reset Device พร้อม Admin audit
+- `supabase/migrations/008_device_login_history.sql` ประวัติ Login แยกตามอุปกรณ์,
+  สถิติย้อนหลัง 30 วัน และ Admin RPC สำหรับอ่านประวัติ 100 รายการล่าสุด
 - `.openai/hosting.json` การตั้งค่า OpenAI Sites
